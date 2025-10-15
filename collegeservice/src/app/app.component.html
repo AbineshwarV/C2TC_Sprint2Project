@@ -1,161 +1,161 @@
-<div class="container">
-  <div style="height:100vh;">
-    <div class="shadow p-5 position-absolute top-50 start-50 translate-middle" style="min-width:400px;">
-      <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
-        <h4 class="display-6 text-center py-2">College Database</h4>
+<div class="container py-5">
+  <!-- REGISTRATION CARD -->
+  <div class="card shadow-lg rounded-4 mx-auto mb-5 p-4" style="max-width: 720px;">
+    <h3 class="text-center mb-4 fw-bold">College Database</h3>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="row g-3">
+      <div class="col-md-6">
+        <label for="name" class="form-label fw-semibold">Name</label>
+        <input id="name" required #name="ngModel" ngModel name="name" type="text" class="form-control" placeholder="Enter college name">
+        <div *ngIf="name.invalid && name.touched" class="text-danger small">Required</div>
+      </div>
 
-        <!-- Name -->
-        <div class="mb-3">
-          <label for="name">Name</label>
-          <input id="name" required #name="ngModel" ngModel name="name" type="text" class="form-control" placeholder="Enter name">
-          <div *ngIf="name.invalid && name.touched">
-            <small class="text-danger" *ngIf="name.errors?.['required']">Required</small>
-          </div>
-        </div>
+      <div class="col-md-6">
+        <label for="location" class="form-label fw-semibold">Location</label>
+        <input id="location" required #location="ngModel" ngModel name="location" type="text" class="form-control" placeholder="City">
+        <div *ngIf="location.invalid && location.touched" class="text-danger small">Required</div>
+      </div>
 
-        <!-- Location -->
-        <div class="mb-3">
-          <label for="location">Location</label>
-          <input id="location" required #location="ngModel" ngModel name="location" type="text" class="form-control" placeholder="Enter location">
-          <div *ngIf="location.invalid && location.touched">
-            <small class="text-danger" *ngIf="location.errors?.['required']">Required</small>
-          </div>
-        </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input id="email" required #email="ngModel" ngModel name="email" type="email" class="form-control" placeholder="example@mail.com">
+        <div *ngIf="email.invalid && email.touched" class="text-danger small">Required</div>
+      </div>
 
-        <!-- Email -->
-        <div class="mb-3">
-          <label for="email">Email</label>
-          <input id="email" required #email="ngModel" ngModel name="email" type="email" class="form-control" placeholder="Enter email">
-          <div *ngIf="email.invalid && email.touched">
-            <small class="text-danger" *ngIf="email.errors?.['required']">Required</small>
-          </div>
-        </div>
+      <div class="col-md-6">
+        <label for="phoneNumber" class="form-label fw-semibold">Phone</label>
+        <input id="phoneNumber" required #phoneNumber="ngModel" ngModel name="phoneNumber" type="text" class="form-control" placeholder="+91-9876543210">
+        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-danger small">Required</div>
+      </div>
 
-        <!-- Phone -->
-        <div class="mb-3">
-          <label for="phoneNumber">Phone Number</label>
-          <input id="phoneNumber" required #phoneNumber="ngModel" ngModel name="phoneNumber" type="text" class="form-control" placeholder="Enter phone number">
-          <div *ngIf="phoneNumber.invalid && phoneNumber.touched">
-            <small class="text-danger" *ngIf="phoneNumber.errors?.['required']">Required</small>
-          </div>
-        </div>
+      <div class="col-md-6">
+        <label for="establishedYear" class="form-label fw-semibold">Established Year</label>
+        <input id="establishedYear" #establishedYear="ngModel" ngModel name="establishedYear" type="number" class="form-control" placeholder="1990">
+      </div>
 
-        <!-- Established Year -->
-        <div class="mb-3">
-          <label for="establishedYear">Established Year</label>
-          <input id="establishedYear" #establishedYear="ngModel" ngModel name="establishedYear" type="number" class="form-control" placeholder="Enter year">
-        </div>
+      <div class="col-md-6 form-check d-flex align-items-center mt-4">
+        <input id="autonomous" #autonomous="ngModel" ngModel name="autonomous" type="checkbox" class="form-check-input me-2">
+        <label class="form-check-label fw-semibold" for="autonomous">Autonomous</label>
+      </div>
 
-        <!-- Autonomous -->
-        <div class="mb-3 form-check">
-          <input id="autonomous" #autonomous="ngModel" ngModel name="autonomous" type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="autonomous">Autonomous</label>
-        </div>
+      <div class="col-md-6">
+        <label for="affiliation" class="form-label fw-semibold">Affiliation</label>
+        <input id="affiliation" #affiliation="ngModel" ngModel name="affiliation" type="text" class="form-control" placeholder="Affiliated University">
+      </div>
 
-        <!-- Affiliation -->
-        <div class="mb-3">
-          <label for="affiliation">Affiliation</label>
-          <input id="affiliation" #affiliation="ngModel" ngModel name="affiliation" type="text" class="form-control" placeholder="Enter affiliation">
-        </div>
+      <div class="col-md-6">
+        <label for="website" class="form-label fw-semibold">Website</label>
+        <input id="website" #website="ngModel" ngModel name="website" type="url" class="form-control" placeholder="https://example.com">
+      </div>
 
-        <!-- Website -->
-        <div class="mb-3">
-          <label for="website">Website</label>
-          <input id="website" #website="ngModel" ngModel name="website" type="text" class="form-control" placeholder="Enter website URL">
-        </div>
+      <div class="col-12 text-center mt-3">
+        <button class="btn btn-primary px-5 btn-modern" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
 
-        <div class="text-center">
-          <input class="btn btn-primary" type="submit" value="Submit">
-        </div>
-      </form>
+  <!-- TABLE CARD -->
+  <div class="card shadow-lg rounded-4 p-3">
+    <h4 class="text-center fw-bold mb-3">Registered Colleges</h4>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center modern-table">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Year</th>
+            <th>Autonomous</th>
+            <th>Affiliation</th>
+            <th>Website</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let college of collegeDetails">
+            <td>{{college.id}}</td>
+            <td>{{college.name}}</td>
+            <td>{{college.location}}</td>
+            <td>{{college.email}}</td>
+            <td>{{college.phoneNumber}}</td>
+            <td>{{college.establishedYear}}</td>
+            <td>
+              <span class="badge bg-success" *ngIf="college.autonomous">Yes</span>
+              <span class="badge bg-secondary" *ngIf="!college.autonomous">No</span>
+            </td>
+            <td>{{college.affiliation}}</td>
+            <td>
+              <a [href]="college.website" target="_blank">{{college.website}}</a>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-info btn-modern" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="edit(college)">Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-danger btn-modern" (click)="deleteCollege(college)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Table of Colleges -->
-  <div class="mt-5">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Established Year</th>
-          <th>Autonomous</th>
-          <th>Affiliation</th>
-          <th>Website</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let college of collegeDetails">
-          <td>{{college.id}}</td>
-          <td>{{college.name}}</td>
-          <td>{{college.location}}</td>
-          <td>{{college.email}}</td>
-          <td>{{college.phoneNumber}}</td>
-          <td>{{college.establishedYear}}</td>
-          <td>{{college.autonomous ? 'Yes' : 'No'}}</td>
-          <td>{{college.affiliation}}</td>
-          <td>{{college.website}}</td>
-          <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(college)">Edit</button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger" (click)="deleteCollege(college)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Modal for Update -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update College</h5>
+  <!-- MODAL: Update College -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold">Update College</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form #updateForm="ngForm" (ngSubmit)="updateCollege()">
-            <div class="mb-3">
-              <label for="updateName">Name</label>
-              <input id="updateName" [(ngModel)]="collegeToUpdate.name" name="name" type="text" class="form-control" required>
+          <form #updateForm="ngForm" (ngSubmit)="updateCollege()" class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Name</label>
+              <input [(ngModel)]="collegeToUpdate.name" name="name" type="text" class="form-control" required>
             </div>
-            <div class="mb-3">
-              <label for="updateLocation">Location</label>
-              <input id="updateLocation" [(ngModel)]="collegeToUpdate.location" name="location" type="text" class="form-control" required>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Location</label>
+              <input [(ngModel)]="collegeToUpdate.location" name="location" type="text" class="form-control" required>
             </div>
-            <div class="mb-3">
-              <label for="updateEmail">Email</label>
-              <input id="updateEmail" [(ngModel)]="collegeToUpdate.email" name="email" type="email" class="form-control" required>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email</label>
+              <input [(ngModel)]="collegeToUpdate.email" name="email" type="email" class="form-control" required>
             </div>
-            <div class="mb-3">
-              <label for="updatePhone">Phone Number</label>
-              <input id="updatePhone" [(ngModel)]="collegeToUpdate.phoneNumber" name="phoneNumber" type="text" class="form-control" required>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Phone</label>
+              <input [(ngModel)]="collegeToUpdate.phoneNumber" name="phoneNumber" type="text" class="form-control" required>
             </div>
-            <div class="mb-3">
-              <label for="updateYear">Established Year</label>
-              <input id="updateYear" [(ngModel)]="collegeToUpdate.establishedYear" name="establishedYear" type="number" class="form-control">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Established Year</label>
+              <input [(ngModel)]="collegeToUpdate.establishedYear" name="establishedYear" type="number" class="form-control">
             </div>
-            <div class="mb-3 form-check">
-              <input id="updateAutonomous" [(ngModel)]="collegeToUpdate.autonomous" name="autonomous" type="checkbox" class="form-check-input">
-              <label class="form-check-label" for="updateAutonomous">Autonomous</label>
+
+            <div class="col-md-6 form-check mt-4">
+              <input [(ngModel)]="collegeToUpdate.autonomous" name="autonomous" type="checkbox" class="form-check-input" id="updateAutonomous">
+              <label class="form-check-label fw-semibold" for="updateAutonomous">Autonomous</label>
             </div>
-            <div class="mb-3">
-              <label for="updateAffiliation">Affiliation</label>
-              <input id="updateAffiliation" [(ngModel)]="collegeToUpdate.affiliation" name="affiliation" type="text" class="form-control">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Affiliation</label>
+              <input [(ngModel)]="collegeToUpdate.affiliation" name="affiliation" type="text" class="form-control">
             </div>
-            <div class="mb-3">
-              <label for="updateWebsite">Website</label>
-              <input id="updateWebsite" [(ngModel)]="collegeToUpdate.website" name="website" type="text" class="form-control">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Website</label>
+              <input [(ngModel)]="collegeToUpdate.website" name="website" type="url" class="form-control">
             </div>
-            <div class="text-center">
-              <input class="btn btn-primary" type="submit" value="Update">
+
+            <div class="col-12 text-center mt-3">
+              <button class="btn btn-primary px-5 btn-modern" type="submit">Update</button>
             </div>
+
           </form>
         </div>
       </div>
