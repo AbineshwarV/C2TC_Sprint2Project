@@ -1,164 +1,88 @@
-<div class="container py-5">
-  <!-- REGISTRATION CARD -->
-  <div class="card shadow-lg rounded-4 mx-auto mb-5 p-4" style="max-width: 720px;">
-    <h3 class="text-center mb-4 fw-bold">College Database</h3>
-    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="row g-3">
-      <div class="col-md-6">
-        <label for="name" class="form-label fw-semibold">Name</label>
-        <input id="name" required #name="ngModel" ngModel name="name" type="text" class="form-control" placeholder="Enter college name">
-        <div *ngIf="name.invalid && name.touched" class="text-danger small">Required</div>
-      </div>
+<div class="min-h-screen bg-gray-100 p-6">
+  <!-- Header -->
+  <h1 class="text-4xl font-extrabold text-center mb-10 text-blue-600">🎓 College Management</h1>
 
-      <div class="col-md-6">
-        <label for="location" class="form-label fw-semibold">Location</label>
-        <input id="location" required #location="ngModel" ngModel name="location" type="text" class="form-control" placeholder="City">
-        <div *ngIf="location.invalid && location.touched" class="text-danger small">Required</div>
-      </div>
+  <!-- College Form -->
+  <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-3xl p-8 mb-12">
+    <form (ngSubmit)="addOrUpdateCollege()" #collegeForm="ngForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <input [(ngModel)]="college.name" name="name" placeholder="College Name" required
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.location" name="location" placeholder="Location"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.email" name="email" placeholder="Email"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.phoneNumber" name="phoneNumber" placeholder="Phone Number"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.establishedYear" name="establishedYear" type="number" placeholder="Established Year"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.affiliation" name="affiliation" placeholder="Affiliation"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
+      <input [(ngModel)]="college.website" name="website" placeholder="Website"
+        class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm" />
 
-      <div class="col-md-6">
-        <label for="email" class="form-label fw-semibold">Email</label>
-        <input id="email" required #email="ngModel" ngModel name="email" type="email" class="form-control" placeholder="example@mail.com">
-        <div *ngIf="email.invalid && email.touched" class="text-danger small">Required</div>
-      </div>
-
-      <div class="col-md-6">
-        <label for="phoneNumber" class="form-label fw-semibold">Phone</label>
-        <input id="phoneNumber" required #phoneNumber="ngModel" ngModel name="phoneNumber" type="text" class="form-control" placeholder="+91-9876543210">
-        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-danger small">Required</div>
-      </div>
-
-      <div class="col-md-6">
-        <label for="establishedYear" class="form-label fw-semibold">Established Year</label>
-        <input id="establishedYear" #establishedYear="ngModel" ngModel name="establishedYear" type="number" class="form-control" placeholder="1990">
-      </div>
-
-      <div class="col-md-6 form-check d-flex align-items-center mt-4">
-        <input id="autonomous" #autonomous="ngModel" ngModel name="autonomous" type="checkbox" class="form-check-input me-2">
-        <label class="form-check-label fw-semibold" for="autonomous">Autonomous</label>
-      </div>
-
-      <div class="col-md-6">
-        <label for="affiliation" class="form-label fw-semibold">Affiliation</label>
-        <input id="affiliation" #affiliation="ngModel" ngModel name="affiliation" type="text" class="form-control" placeholder="Affiliated University">
-      </div>
-
-      <div class="col-md-6">
-        <label for="website" class="form-label fw-semibold">Website</label>
-        <input id="website" #website="ngModel" ngModel name="website" type="url" class="form-control" placeholder="https://example.com">
-      </div>
-
-      <div class="col-12 text-center mt-3">
-        <button class="btn btn-primary px-5 btn-modern" type="submit">Submit</button>
+      <!-- Autonomous checkbox -->
+      <div class="flex items-center space-x-3 mt-2 md:mt-0">
+        <input type="checkbox" [(ngModel)]="college.autonomous" name="autonomous" id="autonomous"
+          class="h-5 w-5 text-blue-600 rounded-full focus:ring-2 focus:ring-blue-400" />
+        <label for="autonomous" class="font-medium text-gray-700">Autonomous</label>
       </div>
     </form>
-  </div>
 
-  <!-- TABLE CARD -->
-  <div class="card shadow-lg rounded-4 p-3">
-    <h4 class="text-center fw-bold mb-3">Registered Colleges</h4>
-    <div class="table-responsive">
-      <table class="table table-hover align-middle text-center modern-table">
-        <thead class="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Year</th>
-            <th>Autonomous</th>
-            <th>Affiliation</th>
-            <th>Website</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let college of collegeDetails">
-            <td>{{college.id}}</td>
-            <td>{{college.name}}</td>
-            <td>{{college.location}}</td>
-            <td>{{college.email}}</td>
-            <td>{{college.phoneNumber}}</td>
-            <td>{{college.establishedYear}}</td>
-            <td>
-              <span class="badge bg-success" *ngIf="college.autonomous">Yes</span>
-              <span class="badge bg-secondary" *ngIf="!college.autonomous">No</span>
-            </td>
-            <td>{{college.affiliation}}</td>
-            <td>
-              <a [href]="college.website" target="_blank">{{college.website}}</a>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-info btn-modern" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="edit(college)">Edit</button>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-danger btn-modern" (click)="deleteCollege(college)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Action Buttons -->
+    <div class="mt-8 text-center">
+      <button type="submit" (click)="addOrUpdateCollege()"
+        class="bg-blue-600 text-white px-8 py-3 rounded-2xl hover:bg-blue-700 shadow-lg transition duration-300 font-semibold">
+        {{ isEditing ? 'Update College' : 'Add College' }}
+      </button>
+      <button *ngIf="isEditing" (click)="cancelEdit()"
+        class="bg-gray-300 text-gray-800 px-6 py-3 rounded-2xl hover:bg-gray-400 shadow-lg transition duration-300 font-semibold ml-4">
+        Cancel
+      </button>
     </div>
   </div>
 
-  <!-- MODAL: Update College -->
-  <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold">Update College</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form #updateForm="ngForm" (ngSubmit)="updateCollege()" class="row g-3">
+  <!-- College List Table -->
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-6xl mx-auto">
+    <table class="w-full text-sm text-left text-gray-700">
+      <!-- Table Header -->
+      <thead class="text-xs uppercase bg-blue-500 text-white">
+        <tr>
+          <th scope="col" class="px-6 py-3">ID</th>
+          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">Location</th>
+          <th scope="col" class="px-6 py-3">Email</th>
+          <th scope="col" class="px-6 py-3">Phone</th>
+          <th scope="col" class="px-6 py-3">Year</th>
+          <th scope="col" class="px-6 py-3 text-center">Autonomous</th>
+          <th scope="col" class="px-6 py-3">Affiliation</th>
+          <th scope="col" class="px-6 py-3">Website</th>
+          <th scope="col" class="px-6 py-3 text-center">Actions</th>
+        </tr>
+      </thead>
 
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Name</label>
-              <input [(ngModel)]="collegeToUpdate.name" name="name" type="text" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Location</label>
-              <input [(ngModel)]="collegeToUpdate.location" name="location" type="text" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Email</label>
-              <input [(ngModel)]="collegeToUpdate.email" name="email" type="email" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Phone</label>
-              <input [(ngModel)]="collegeToUpdate.phoneNumber" name="phoneNumber" type="text" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Established Year</label>
-              <input [(ngModel)]="collegeToUpdate.establishedYear" name="establishedYear" type="number" class="form-control">
-            </div>
-
-            <div class="col-md-6 form-check mt-4">
-              <input [(ngModel)]="collegeToUpdate.autonomous" name="autonomous" type="checkbox" class="form-check-input" id="updateAutonomous">
-              <label class="form-check-label fw-semibold" for="updateAutonomous">Autonomous</label>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Affiliation</label>
-              <input [(ngModel)]="collegeToUpdate.affiliation" name="affiliation" type="text" class="form-control">
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Website</label>
-              <input [(ngModel)]="collegeToUpdate.website" name="website" type="url" class="form-control">
-            </div>
-
-            <div class="col-12 text-center mt-3">
-              <button class="btn btn-primary px-5 btn-modern" type="submit">Update</button>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
+      <!-- Table Body -->
+      <tbody>
+        <tr *ngFor="let c of colleges"
+            class="odd:bg-white even:bg-blue-50 border-b border-blue-200 hover:bg-blue-50 transition">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ c.id }}</th>
+          <td class="px-6 py-4">{{ c.name }}</td>
+          <td class="px-6 py-4">{{ c.location }}</td>
+          <td class="px-6 py-4">{{ c.email }}</td>
+          <td class="px-6 py-4">{{ c.phoneNumber }}</td>
+          <td class="px-6 py-4">{{ c.establishedYear }}</td>
+          <td class="px-6 py-4 text-center">{{ c.autonomous ? 'Yes' : 'No' }}</td>
+          <td class="px-6 py-4">{{ c.affiliation }}</td>
+          <td class="px-6 py-4">
+            <a [href]="c.website" target="_blank" class="text-blue-600 hover:underline">{{ c.website }}</a>
+          </td>
+          <td class="px-6 py-4 flex justify-center space-x-2">
+            <button (click)="editCollege(c)"
+              class="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-500 transition">Edit</button>
+            <button (click)="deleteCollege(c.id)"
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CollegeService } from './college.service';
 
 @Component({
@@ -7,77 +6,50 @@ import { CollegeService } from './college.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'college-module';
+export class AppComponent implements OnInit {
+  colleges: any[] = [];
+  college: any = { autonomous: false };
+  isEditing = false;
 
-  constructor(private collegeService: CollegeService) {
-    this.getCollegeDetails();
+  constructor(private collegeService: CollegeService) {}
+
+  ngOnInit(): void {
+    this.loadColleges();
   }
 
-  register(registerForm: NgForm) {
-    this.collegeService.registerCollege(registerForm.value).subscribe(
-      (resp: any) => {
-        console.log(resp);
-        registerForm.reset();
-        this.getCollegeDetails();
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+  loadColleges(): void {
+    this.collegeService.getAllColleges().subscribe(data => (this.colleges = data));
   }
 
-  getCollegeDetails() {
-    this.collegeService.getColleges().subscribe(
-      (resp) => {
-        console.log(resp);
-        this.collegeDetails = resp;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  addOrUpdateCollege(): void {
+    if (this.isEditing) {
+      this.collegeService.updateCollege(this.college.id, this.college).subscribe(() => {
+        this.loadColleges();
+        this.cancelEdit();
+      });
+    } else {
+      this.collegeService.addCollege(this.college).subscribe(() => {
+        this.loadColleges();
+        this.college = { autonomous: false };
+      });
+    }
   }
 
-  collegeDetails = null as any;
-
-  deleteCollege(college: any) {
-    this.collegeService.deleteCollege(college.id).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.getCollegeDetails();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  editCollege(c: any): void {
+    this.isEditing = true;
+    this.college = { ...c }; 
+    if (this.college.autonomous === undefined) this.college.autonomous = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  collegeToUpdate = {
-    id: null as any,
-    name: '',
-    location: '',
-    email: '',
-    phoneNumber: '',
-    establishedYear: undefined,
-    autonomous: false,
-    affiliation: '',
-    website: ''
-  };
-
-  edit(college: any) {
-    this.collegeToUpdate = { ...college };
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.college = { autonomous: false };
   }
 
-  updateCollege() {
-    this.collegeService.updateCollege(this.collegeToUpdate).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.getCollegeDetails();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  deleteCollege(id: number): void {
+    if (confirm('Delete this college?')) {
+      this.collegeService.deleteCollege(id).subscribe(() => this.loadColleges());
+    }
   }
 }

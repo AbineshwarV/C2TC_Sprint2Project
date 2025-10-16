@@ -1,26 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollegeService {
-  API="http://localhost:8080/collegeservice";
-  public registerCollege(collegeData: any)
-  {
-    return this.http.post(`${this.API}/collegeservice` , collegeData);
+  private baseUrl = 'http://localhost:8080/collegeservice';
+
+  constructor(private http: HttpClient) {}
+
+  getAllColleges(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
   }
 
-  public getColleges(){
-    return this.http.get(`${this.API}/collegeservice`);
+  getCollegeById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  public deleteCollege(collegeId:any){
-    return this.http.delete(`${this.API}/collegeservice/${collegeId}`);
+  addCollege(college: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, college);
   }
 
-  public updateCollege(college: any){
-    return this.http.put(`${this.API}/collegeservice/${college.id}`, college);
+  updateCollege(id: number, college: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}`, college);
   }
-  constructor(private http: HttpClient) { }
+
+  deleteCollege(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
 }
